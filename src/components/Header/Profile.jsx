@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { getInitials } from '@/utils/getInitials'
 import styles from './styles.module.scss'
 
-import { FaCircleUser, FaRegBell } from 'react-icons/fa'
+import { FaRegBell } from 'react-icons/fa'
 import { HiOutlineChatAlt2 } from 'react-icons/hi'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -16,7 +16,7 @@ export const Profile = ({ setModal }) => {
       {loggedIn ? (
         <>
           <FaRegBell color='#fff' fontSize='24px' cursor='pointer' />
-          <HiOutlineChatAlt2 color='#fff' fontSize='28px' cursor='pointer' />
+          <HiOutlineChatAlt2 onClick={() => setModal('chat')} color='#fff' fontSize='28px' cursor='pointer' />
           <div className={styles.userInfo}>
             <p>Victor Motta</p>
             <span>victormotta7@gmail.com</span>

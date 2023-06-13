@@ -37,6 +37,8 @@
   align-items: center;
   gap: 15px;
 
+  position: relative;
+
   .userInfo {
     padding-left: 15px;
     border-left: 2px solid #ffffffd8;
@@ -77,8 +79,8 @@
 
     position: absolute;
 
-    right: 90px;
-    bottom: -62px;
+    right: 0;
+    bottom: -75px;
 
     display: flex;
     flex-direction: column;
@@ -139,8 +141,10 @@
   }
 
   .logged {
-    right: 90px;
-    bottom: -66px;
+    position: absolute;
+
+    right: 0;
+    bottom: -75px;
 
     &:after {
       top: -5px;
