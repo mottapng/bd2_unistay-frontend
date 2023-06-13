@@ -1,0 +1,56 @@
+.userInfo {
+  padding: 42px 0;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gray-900);
+
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 35px;
+
+  text-transform: capitalize;
+  font-feature-settings: 'salt' on, 'liga' off;
+
+  border-bottom: 3px solid var(--gray-900);
+
+  b {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .userAvatar {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 100%;
+    background-color: var(--purple-primary);
+
+    font-weight: bold;
+    padding-top: 2px;
+    color: #fff;
+
+    cursor: pointer;
+
+    font-size: 16px;
+    margin-right: 15px;
+  }
+
+  .userName {
+    white-space: wrap;
+  }
+
+  .userRating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    font-size: 22px;
+  }
+}

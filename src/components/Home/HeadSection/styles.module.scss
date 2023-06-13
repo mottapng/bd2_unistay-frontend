@@ -1,0 +1,88 @@
+.headContainer {
+  width: 100%;
+  max-width: 1440px;
+
+  margin: 0 auto;
+  padding: 110px 90px 150px;
+
+  h1 {
+    max-width: 858px;
+    width: 100%;
+    font-weight: 800;
+    font-size: 36px;
+
+    color: var(--gray-900);
+
+    position: relative;
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+
+      width: 44%;
+      border-bottom: 3px solid var(--purple-primary);
+    }
+  }
+
+  .bottomContainer {
+    display: flex;
+
+    margin-top: 42px;
+
+    .image {
+      box-shadow: 5px 24px 53px rgba(0, 0, 0, 0.25);
+      border-radius: 50px 0 50px 0;
+    }
+
+    .infoGrid {
+      width: 100%;
+
+      margin-left: 60px;
+
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 25px;
+      row-gap: 20px;
+
+      justify-content: flex-end;
+
+      .infoContainer {
+        flex: 2;
+        min-width: 190px;
+
+        div {
+          width: 77px;
+          height: 77px;
+
+          box-shadow: 0px 12px 19px rgba(0, 0, 0, 0.15);
+          border-radius: 10px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .icon {
+            width: 45px;
+            height: 45px;
+
+            color: var(--purple-primary);
+          }
+        }
+        p {
+          margin-top: 20px;
+
+          font-weight: 600;
+          font-size: 22px;
+          line-height: 35px;
+          text-transform: capitalize;
+          font-feature-settings: 'salt' on, 'liga' off;
+
+          color: var(--gray-900);
+        }
+      }
+    }
+  }
+}

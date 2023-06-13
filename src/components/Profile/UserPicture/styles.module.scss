@@ -1,0 +1,37 @@
+.userAvatar {
+  position: relative;
+
+  img {
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .iconContainer {
+    position: absolute;
+
+    bottom: 10px;
+    right: 10px;
+
+    padding: 6px;
+    box-shadow: 0px 12px 19px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    .editIcon {
+      color: var(--purple-primary);
+      font-weight: bold;
+
+      font-size: 28px;
+
+      margin-bottom: 2px;
+      margin-left: 2px;
+    }
+  }
+}

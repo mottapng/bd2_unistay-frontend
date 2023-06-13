@@ -1,0 +1,42 @@
+.listingsContainer {
+  min-height: calc(100% - 151px);
+
+  margin-top: 75px;
+
+  .listingsInner {
+    max-width: 1440px;
+    padding: 90px 90px 110px;
+    margin: 0 auto;
+
+    h1 {
+      max-width: 828px;
+      width: 100%;
+      font-weight: 800;
+      font-size: 36px;
+
+      color: var(--gray-900);
+
+      position: relative;
+
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      a {
+        display: flex;
+        align-items: center;
+      }
+
+      &::after {
+        content: '';
+
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+
+        width: 124px;
+        border-bottom: 3px solid var(--purple-primary);
+      }
+    }
+  }
+}
