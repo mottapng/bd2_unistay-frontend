@@ -5,14 +5,14 @@ import './globals.scss'
 import { AuthContextProvider } from '@/context/AuthProvider'
 
 const inter = Inter({
-  variable: '--font-inter',
+  variable: '--font-Inter',
   subsets: ['latin'],
 })
 
 const dm_sans = DM_Sans({
+  variable: '--font-dm-sans',
   subsets: ['latin'],
   weight: '700',
-  variable: '--font-dm-sans'
 })
 
 export const metadata = {
@@ -22,7 +22,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${dm_sans.variable}`}>
+    <html lang="en" className={`${dm_sans.variable} ${inter.variable}`}>
       <body>
         <AuthContextProvider>
           <Header />

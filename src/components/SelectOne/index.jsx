@@ -1,15 +1,11 @@
+'use client'
 import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import { FiChevronDown } from 'react-icons/fi';
 
-export const SelectOne = () => {
-  const options = [
-    'fruit',
-    'vegetable',
-    'meat',
-  ];
+export const SelectOne = ({ label, options, required, search }) => {
 
-  const [value, setValue] = useState('fruit');
+  const [value, setValue] = useState(options[0]);
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const filteredOptions = options.filter((option) =>
@@ -31,7 +27,7 @@ export const SelectOne = () => {
 
   return (
     <div className={styles.selectOneContainer}>
-      <label>Selecione o Chat</label>
+      <label>{label} {required && <span>*</span>}</label>
       <div className={styles.selectWrapper}>
         <div className={isOpen ? `${styles.selectOpen}` : `${styles.selectValue}`} onClick={handleToggleDropdown}>
           <p>{value}</p>
@@ -40,12 +36,12 @@ export const SelectOne = () => {
         {isOpen && (
           <div className={styles.dropdown}>
             <ul>
-              <input
+              {search && <input
                 type="text"
                 placeholder="Buscar..."
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-              />
+              />}
               {filteredOptions.map((option, i) => (
                 <li
                   key={i}

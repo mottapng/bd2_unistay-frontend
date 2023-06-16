@@ -5,10 +5,12 @@ import { BiBed } from 'react-icons/bi'
 import { FaBath, FaCarSide } from 'react-icons/fa'
 
 export const RepCard = ({ data }) => {
+  console.log(data)
+
   return (
     <div className={styles.repCard}>
       <div className={styles.bannerContainer}>
-        <Image src={data.photos[0]} fill={true} className={styles.banner} alt="Banner República" />
+        <Image src={data.images[0]?.file_url} fill={true} className={styles.banner} alt="Banner República" />
       </div>
       <div className={styles.repContent}>
         <h2>{data.name}</h2>

@@ -3,12 +3,13 @@ import React, { useState } from 'react'
 import styles from './styles.module.scss'
 import Image from 'next/image';
 import { FaRegTrashAlt } from 'react-icons/fa';
-import { formatCellphone, formatDate } from '@/utils/masks';
+import { formatCellphone, formatDate, formatMoney } from '@/utils/masks';
 
 export const Input = ({ label, type, placeholder, required, width, defaultValue, multiple, maxLength, minLength, regex, disabled }) => {
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState([]);
   const [value, setValue] = useState(defaultValue);
+  const [quantity, setQuantity] = useState(0);
 
   const handleDrag = function (e) {
     e.preventDefault();
@@ -69,9 +70,24 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
       value = formatCellphone(event.target.value);
     else if (regex === "date")
       value = formatDate(event.target.value);
+    else if (regex === "money") {
+      value = formatMoney(event.target.value.replace(/\D/g, ''));
+    }
 
     setValue(value);
   };
+
+  const handleQuantity = (event) => {
+    if (event == "increase") {
+      if (quantity >= 0 && quantity < 10) {
+        setQuantity(prev => prev += 1)
+      }
+    } else if (event == "decrease") {
+      if (quantity > 0 && quantity <= 10) {
+        setQuantity(prev => prev -= 1)
+      }
+    }
+  }
 
   return type === 'text' || type === "email" || type === "password" ? (
     <div className={styles.formInput} style={{ width: width && width }}>
@@ -88,56 +104,76 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
         disabled={disabled}
       />
     </div>
-  ) : type === 'textarea' ?
+  ) : type === 'count' ?
     (
-      <div className={`${styles.formInput} ${styles.textarea}`}>
+      <div className={styles.formInput} style={{ width: width && width }}>
         <label>{label} {required && <span>*</span>}</label>
-        <textarea required={required} />
+        <div style={{ display: 'flex', width: '100%', position: 'relative' }}>
+          <input type="button" value="-" onClick={() => handleQuantity("decrease")} className={styles.decrease} />
+          <input
+            type='number'
+            disabled={true}
+            value={quantity}
+            onChange={e => this.setState({ text: e.target.value })}
+            className={styles.quantity}
+            placeholder={placeholder}
+            required={required}
+            style={{ width: '100%', textAlign: 'center' }}
+          />
+          <input type="button" value="+" onClick={() => handleQuantity("increase")} className={styles.increase} />
+        </div>
       </div>
-    ) : type === "file" ? (
-      <div className={styles.fileInput}>
-        <label className={styles.label}>{label} {required && <span>*</span>}</label>
-        <input
-          id="fileUpload"
-          type={type}
-          disabled={files.length >= 5 ? true : false}
-          onChange={handleUpload}
-          accept=".png, .jpeg, .jpg"
-          multiple={multiple}
-        />
-        <label
-          htmlFor="fileUpload"
-          className={dragActive ? styles.dragActive : styles.uploadInput}
-          onDragEnter={handleDrag}
-        >
-          {files.length === 0 ? (
-            <div>
-              {multiple ? (
-                <p>Arraste suas fotos aqui, ou <b>adicione</b></p>
-              ) :
-                <p>Arraste sua foto aqui, ou <b>adicione</b></p>
-              }
-              <span>JPG, JPEG, PNG</span>
-            </div>
-          ) :
-            Array.from(files).map((file, i) => (
-              <div key={i} className={styles.uploads}>
-                <Image
-                  src={file}
-                  width={100}
-                  height={100}
-                  alt={file}
-                />
-                <div
-                  className={styles.after}
-                  onClick={(e) => handleImageClick(i, e)}
-                >
-                  <FaRegTrashAlt />
-                </div>
+    )
+    : type === 'textarea' ?
+      (
+        <div className={`${styles.formInput} ${styles.textarea}`}>
+          <label>{label} {required && <span>*</span>}</label>
+          <textarea required={required} />
+        </div>
+      ) : type === "file" ? (
+        <div className={styles.fileInput}>
+          <label className={styles.label}>{label} {required && <span>*</span>}</label>
+          <input
+            id="fileUpload"
+            type={type}
+            disabled={files.length >= 5 ? true : false}
+            onChange={handleUpload}
+            accept=".png, .jpeg, .jpg"
+            multiple={multiple}
+          />
+          <label
+            htmlFor="fileUpload"
+            className={dragActive ? styles.dragActive : styles.uploadInput}
+            onDragEnter={handleDrag}
+          >
+            {files.length === 0 ? (
+              <div>
+                {multiple ? (
+                  <p>Arraste suas fotos aqui, ou <b>adicione</b></p>
+                ) :
+                  <p>Arraste sua foto aqui, ou <b>adicione</b></p>
+                }
+                <span>JPG, JPEG, PNG</span>
               </div>
-            ))}
-          {dragActive && <div className={styles.dragElement} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div>}
-        </label>
-      </div>
-    ) : undefined
+            ) :
+              Array.from(files).map((file, i) => (
+                <div key={i} className={styles.uploads}>
+                  <Image
+                    src={file}
+                    width={100}
+                    height={100}
+                    alt={file}
+                  />
+                  <div
+                    className={styles.after}
+                    onClick={(e) => handleImageClick(i, e)}
+                  >
+                    <FaRegTrashAlt />
+                  </div>
+                </div>
+              ))}
+            {dragActive && <div className={styles.dragElement} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div>}
+          </label>
+        </div>
+      ) : undefined
 }

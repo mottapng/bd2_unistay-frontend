@@ -37,3 +37,14 @@ export const reformatDate = (date) => {
 
   return `${formattedDay}/${formattedMonth}/${year}`;
 };
+
+export function formatMoney(value) {
+  const trimmedValue = value.replace(/^0+/, '');
+
+  const integerPart = trimmedValue.slice(0, -2);
+  const decimalPart = trimmedValue.slice(-2);
+
+  const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  return `R$ ${formattedInteger},${decimalPart}`;
+}

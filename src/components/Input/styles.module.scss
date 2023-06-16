@@ -24,12 +24,22 @@
 
     padding: 11px 21px;
 
-    font-family: var(--font-inter);
+    font-family: var(--font-Inter);
     font-weight: 400;
     font-size: 14px;
     line-height: 28px;
 
     color: var(--gray-900);
+  }
+
+  .decrease,
+  .increase {
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .increase {
+    right: 0;
   }
 }
 

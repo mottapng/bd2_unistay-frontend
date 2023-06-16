@@ -18,7 +18,7 @@ body {
   overflow-y: overlay;
   overflow-x: hidden;
   background-color: #fff;
-  font-family: var(--font-inter);
+  font-family: var(--font-Inter);
 }
 
 a {
@@ -44,6 +44,12 @@ ul,
 li {
   text-indent: 0;
   list-style-type: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 body::-webkit-scrollbar {
