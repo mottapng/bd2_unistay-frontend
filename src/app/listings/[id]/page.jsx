@@ -3,11 +3,11 @@ import React from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
 import { MdArrowBack } from 'react-icons/md'
-import { UserInfo } from '@/components/Listing/UserInfo'
-import { SideBar } from '@/components/Listing/SideBar'
-import { ImagesSlider } from '@/components/Listing/ImagesSlider'
-import { NumInfo } from '@/components/Listing/NumInfo'
-import { BottomInfo } from '@/components/Listing/BottomInfo'
+import { UserInfo } from '@/components/Pages/Listing/UserInfo'
+import { SideBar } from '@/components/Pages/Listing/SideBar'
+import { ImagesSlider } from '@/components/Pages/Listing/ImagesSlider'
+import { NumInfo } from '@/components/Pages/Listing/NumInfo'
+import { BottomInfo } from '@/components/Pages/Listing/BottomInfo'
 
 const Listing = async ({ params }) => {
   const rep = {

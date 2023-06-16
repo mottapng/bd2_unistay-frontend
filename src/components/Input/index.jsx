@@ -1,11 +1,14 @@
+'use client'
 import React, { useState } from 'react'
 import styles from './styles.module.scss'
 import Image from 'next/image';
 import { FaRegTrashAlt } from 'react-icons/fa';
+import { formatCellphone, formatDate } from '@/utils/masks';
 
-export const Input = ({ label, type, placeholder, required, width, multiple, maxLength }) => {
+export const Input = ({ label, type, placeholder, required, width, defaultValue, multiple, maxLength, minLength, regex, disabled }) => {
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState([]);
+  const [value, setValue] = useState(defaultValue);
 
   const handleDrag = function (e) {
     e.preventDefault();
@@ -59,10 +62,31 @@ export const Input = ({ label, type, placeholder, required, width, multiple, max
     });
   };
 
+  const handleChange = (event) => {
+    let value = event.target.value
+
+    if (regex === "cellphone")
+      value = formatCellphone(event.target.value);
+    else if (regex === "date")
+      value = formatDate(event.target.value);
+
+    setValue(value);
+  };
+
   return type === 'text' || type === "email" || type === "password" ? (
     <div className={styles.formInput} style={{ width: width && width }}>
       <label>{label} {required && <span>*</span>}</label>
-      <input type={type} placeholder={placeholder} required={required} maxLength={maxLength} />
+      <input
+        type={type}
+        value={value}
+        onChange={handleChange}
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+        required={required}
+        maxLength={maxLength}
+        minLength={minLength}
+        disabled={disabled}
+      />
     </div>
   ) : type === 'textarea' ?
     (

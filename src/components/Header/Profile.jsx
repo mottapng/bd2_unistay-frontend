@@ -6,24 +6,26 @@ import { FaRegBell } from 'react-icons/fa'
 import { HiOutlineChatAlt2 } from 'react-icons/hi'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useAuthContext } from '@/context/AuthProvider'
 
 export const Profile = ({ setModal }) => {
+  const { auth, setAuth } = useAuthContext();
   const [loggedIn, setLoggedIn] = useState(true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   return (
     <div className={styles.avatarContainer}>
-      {loggedIn ? (
+      {auth.user ? (
         <>
           <FaRegBell color='#fff' fontSize='24px' cursor='pointer' />
           <HiOutlineChatAlt2 onClick={() => setModal('chat')} color='#fff' fontSize='28px' cursor='pointer' />
           <div className={styles.userInfo}>
-            <p>Victor Motta</p>
-            <span>victormotta7@gmail.com</span>
+            <p>{auth.name}</p>
+            <span>{auth.email}</span>
           </div>
           <a onClick={() => setIsPopupOpen(prev => !prev)} >
             <div className={styles.userAvatar}>
-              {getInitials('Victor Motta')}
+              {getInitials(auth.name)}
             </div>
           </a>
         </>
@@ -38,12 +40,12 @@ export const Profile = ({ setModal }) => {
         />
       )}
       <div
-        className={`${styles.profilePopup} ${loggedIn && styles.logged} ${isPopupOpen && styles.open}`}
+        className={`${styles.profilePopup} ${auth.user && styles.logged} ${isPopupOpen && styles.open}`}
       >
-        {loggedIn ? (
+        {auth.user ? (
           <>
-            <Link onClick={() => setIsPopupOpen(false)} href="/profile/1">Perfil</Link>
-            <span onClick={() => { setIsPopupOpen(false); setLoggedIn(false) }}>Deslogar</span>
+            <Link onClick={() => setIsPopupOpen(false)} href={`/profile/${auth.user}`}>Perfil</Link>
+            <span onClick={() => { setIsPopupOpen(false); setAuth({}) }}>Deslogar</span>
           </>
         ) :
           <>

@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { RepCard } from '@/components/RepsList/RepCard'
 import Link from 'next/link'

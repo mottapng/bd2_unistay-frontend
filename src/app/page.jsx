@@ -1,7 +1,7 @@
 'use client'
-import { HeadSection } from '@/components/Home/HeadSection'
-import { AddSection } from '@/components/Home/AddSection'
-import { ListSection } from '@/components/Home/ListSection'
+import { HeadSection } from '@/components/Pages/Home/HeadSection'
+import { AddSection } from '@/components/Pages/Home/AddSection'
+import { ListSection } from '@/components/Pages/Home/ListSection'
 import styles from './styles.module.scss'
 
 export default function Home() {
