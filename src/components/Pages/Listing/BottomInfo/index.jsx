@@ -10,7 +10,7 @@ export const BottomInfo = ({ data }) => {
           <b>Descrição da Republica</b>
           <br />
           <br />
-          {data.desc}
+          {data.description}
         </p>
       </div>
       <div className={styles.location}>
@@ -18,9 +18,9 @@ export const BottomInfo = ({ data }) => {
           <b>Localização da Republica</b>
           <br />
           <br />
-          {`${data.street}, N°${data.num} - ${data.city}`}
+          {`${data.address.street}, N°${data.address.number} - ${data.address.city}`}
           <br />
-          {`${data.state}, ${data.cep}`}</p>
+          {`${data.address.uf}, 86300-000`}</p>
       </div>
       <div className={styles.locExample}>
         <Image src='/locExample.png' fill={true} alt='Location' />

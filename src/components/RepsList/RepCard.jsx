@@ -5,8 +5,6 @@ import { BiBed } from 'react-icons/bi'
 import { FaBath, FaCarSide } from 'react-icons/fa'
 
 export const RepCard = ({ data }) => {
-  console.log(data)
-
   return (
     <div className={styles.repCard}>
       <div className={styles.bannerContainer}>
@@ -16,7 +14,7 @@ export const RepCard = ({ data }) => {
         <h2>{data.name}</h2>
         <div className={styles.repInfo}>
           <p>{data.type}</p>
-          <b>R${data.price}/Mês</b>
+          <b>R${data.price.toLocaleString('pt-BR')}/Mês</b>
         </div>
         <div className={styles.repNums}>
           <div>

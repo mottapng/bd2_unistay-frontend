@@ -9,7 +9,7 @@ export const RepsList = ({ displayListings, data }) => {
   return (
     <div className={styles.repsGrid}>
       {dataToShow.map((data, i) => (
-        <Link href={`/listings/${data.id}`} key={i}>
+        <Link href={`/listings/${data.listing_id}`} key={i}>
           <RepCard data={data} />
         </Link>
       ))}

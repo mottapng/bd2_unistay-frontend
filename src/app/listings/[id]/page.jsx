@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
@@ -9,23 +8,30 @@ import { ImagesSlider } from '@/components/Pages/Listing/ImagesSlider'
 import { NumInfo } from '@/components/Pages/Listing/NumInfo'
 import { BottomInfo } from '@/components/Pages/Listing/BottomInfo'
 
-const Listing = async ({ params }) => {
-  const rep = {
-    id: 9,
-    name: 'República 03',
-    photos: ['https://images.pexels.com/photos/2187304/pexels-photo-2187304.jpeg?auto=compress&cs=tinysrgb&w=1600', 'https://images.pexels.com/photos/4588041/pexels-photo-4588041.jpeg?auto=compress&cs=tinysrgb&w=1600', 'https://images.pexels.com/photos/9956248/pexels-photo-9956248.jpeg?auto=compress&cs=tinysrgb&w=1600'],
-    type: 'Quarto Privado',
-    price: 1300,
-    numBedrooms: 2,
-    numBathrooms: 3,
-    numGarage: 1,
-    desc: "A Claudinhos house é uma republica deslumbrante e espaçosa com piscina e banheira de hidromassagem!  com total luxo por dentro e incrível espaço exterior para desfrutar enquanto relaxa com a família e os amigos. A área de estar externa, que inclui piscina, spa em cachoeira, mirante com cozinha completa de verão, incluindo muitos assentos no bar ou mesa de jantar ao ar livre.",
-    street: 'Av. XV de Novembro',
-    num: 213,
-    city: "Cornélio Procópio",
-    state: "PR",
-    cep: "86300-000"
+async function getData(listing_id) {
+  const res = await fetch(`http://localhost:5000/listings/${listing_id}`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    return notFound()
   }
+
+  return res.json();
+}
+
+
+export async function generateMetadata({ params }) {
+  const data = await getData(params.id)
+
+  return {
+    title: `${data.name} | UniStay`,
+    description: data.description,
+  };
+}
+
+const Listing = async ({ params }) => {
+  const data = await getData(params.id);
 
   return (
     <section className={styles.listingContainer}>
@@ -35,13 +41,13 @@ const Listing = async ({ params }) => {
             <Link href="/listings?page=1"><MdArrowBack fontSize={38} /></Link>
             Lista de Repúblicas
           </h1>
-          <UserInfo />
-          <ImagesSlider images={rep.photos} />
-          <NumInfo data={rep} />
-          <BottomInfo data={rep} />
+          <UserInfo data={data} />
+          <ImagesSlider images={data.images} />
+          <NumInfo data={data} />
+          <BottomInfo data={data} />
         </div>
         <div className={styles.listingInnerRight}>
-          <SideBar active={true} />
+          <SideBar active={true} data={data} />
         </div>
       </div>
     </section>

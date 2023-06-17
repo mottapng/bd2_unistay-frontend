@@ -50,7 +50,7 @@ export function ImagesSlider({ images }) {
       <Slider {...settings}>
         {images.map((image, i) => (
           <div className={styles.slide} key={i}>
-            <Image src={image} fill={true} alt={image} />
+            <Image src={image.file_url} fill={true} alt={image.file_name} />
           </div>
         ))}
       </Slider>

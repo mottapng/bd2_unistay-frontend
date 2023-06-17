@@ -24,7 +24,7 @@ async function getData(id) {
 export async function generateMetadata({ params }) {
 
   const user = await getData(params.id)
-  console.log(user)
+
   return {
     title: `${user.name} | UniStay`
   };

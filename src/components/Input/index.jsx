@@ -5,11 +5,11 @@ import Image from 'next/image';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { formatCellphone, formatDate, formatMoney } from '@/utils/masks';
 
-export const Input = ({ label, type, placeholder, required, width, defaultValue, multiple, maxLength, minLength, regex, disabled }) => {
+export const Input = ({ label, type, placeholder, required, width, defaultValue, multiple, maxLength, minLength, regex, disabled, files, setFiles }) => {
   const [dragActive, setDragActive] = useState(false);
-  const [files, setFiles] = useState([]);
   const [value, setValue] = useState(defaultValue);
   const [quantity, setQuantity] = useState(0);
+  const [imagesUrl, setImagesUrl] = useState([]);
 
   const handleDrag = function (e) {
     e.preventDefault();
@@ -26,12 +26,16 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
 
   const handleUpload = function (e) {
     const uploads = e.target.files;
+    const uploadedFiles = Array.from(uploads);
     const fileURLs = Array.from(uploads).map((file) => URL.createObjectURL(file));
 
-    if (multiple && (fileURLs.length + files.length <= 6))
-      setFiles((prevFiles) => [...fileURLs, ...prevFiles]);
+    if (multiple && (uploadedFiles.length + files.length <= 6)) {
+      setFiles((prevFiles) => [...uploadedFiles, ...prevFiles]);
+      setImagesUrl((prevUrls) => [...fileURLs, ...prevUrls]);
+    }
     else if (!multiple) {
-      setFiles([...fileURLs]);
+      setFiles([...uploadedFiles]);
+      setImagesUrl(...[fileURLs])
     }
 
     setDragActive(false);
@@ -41,12 +45,16 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
     e.preventDefault();
 
     const uploads = e.dataTransfer.files;
+    const uploadedFiles = Array.from(uploads);
     const fileURLs = Array.from(uploads).map((file) => URL.createObjectURL(file));
 
-    if (multiple && fileURLs.length + files.length <= 6)
-      setFiles((prevFiles) => [...fileURLs, ...prevFiles]);
+    if (multiple && fileURLs.length + files.length <= 6) {
+      setFiles((prevFiles) => [...uploadedFiles, ...prevFiles]);
+      setImagesUrl((prevUrls) => [...fileURLs, ...prevUrls]);
+    }
     else if (!multiple) {
-      setFiles([...fileURLs]);
+      setFiles([...uploadedFiles]);
+      setImagesUrl(...[fileURLs])
     }
 
     setDragActive(false);
@@ -57,6 +65,12 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
     e.stopPropagation();
 
     setFiles((prevFiles) => {
+      const updatedFiles = [...prevFiles];
+      updatedFiles.splice(index, 1);
+      return updatedFiles;
+    });
+
+    setImagesUrl((prevFiles) => {
       const updatedFiles = [...prevFiles];
       updatedFiles.splice(index, 1);
       return updatedFiles;
@@ -89,7 +103,7 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
     }
   }
 
-  return type === 'text' || type === "email" || type === "password" ? (
+  return type === 'text' || type === "email" || type === "password" || type === "number" ? (
     <div className={styles.formInput} style={{ width: width && width }}>
       <label>{label} {required && <span>*</span>}</label>
       <input
@@ -136,7 +150,7 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
           <input
             id="fileUpload"
             type={type}
-            disabled={files.length >= 5 ? true : false}
+            disabled={files.length >= 6 ? true : false}
             onChange={handleUpload}
             accept=".png, .jpeg, .jpg"
             multiple={multiple}
@@ -156,7 +170,7 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
                 <span>JPG, JPEG, PNG</span>
               </div>
             ) :
-              Array.from(files).map((file, i) => (
+              Array.from(imagesUrl).map((file, i) => (
                 <div key={i} className={styles.uploads}>
                   <Image
                     src={file}

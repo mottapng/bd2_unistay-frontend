@@ -3,8 +3,9 @@ import React, { useRef, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { HiCheckCircle } from 'react-icons/hi'
 import { getInitials } from '@/utils/getInitials'
+import { formatMoney } from '@/utils/masks'
 
-export const SideBar = ({ active }) => {
+export const SideBar = ({ active, data }) => {
   const elementRef = useRef(null);
   const [elementWidth, setElementWidth] = useState(null);
 
@@ -32,8 +33,8 @@ export const SideBar = ({ active }) => {
     <div ref={elementRef} className={styles.sideBar}>
       <div className={styles.sideBarContainer} style={{ width: elementWidth > 300 ? elementWidth : 300 }}>
         <div className={styles.sideBarHead}>
-          <h2>Quarto Privado</h2>
-          <p><span>R$800</span>/Mês</p>
+          <h2>{data.private_room ? 'Quarto Privado' : 'Quarto Compartilhado'}</h2>
+          <p><span>R${data.price.toLocaleString('pt-BR')}</span>/Mês</p>
         </div>
 
         <div className={styles.sideBarChecks}>
@@ -53,9 +54,9 @@ export const SideBar = ({ active }) => {
 
         <div className={styles.sideBarUser}>
           <div className={styles.userAvatar}>
-            {getInitials('Victor Motta')}
+            {getInitials(data.users.name)}
           </div>
-          <p>Claudio junior da Silva <br /> ★ 4,8</p>
+          <p>{data.users.name} <br /> ★ 3,6</p>
         </div>
 
         <a>Contatar Locador</a>

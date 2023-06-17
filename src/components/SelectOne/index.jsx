@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import { FiChevronDown } from 'react-icons/fi';
 
-export const SelectOne = ({ label, options, required, search }) => {
-
-  const [value, setValue] = useState(options[0]);
+export const SelectOne = ({ label, options, required, search, value, setValue }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const filteredOptions = options.filter((option) =>
