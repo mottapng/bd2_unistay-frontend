@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { RepsList } from '@/components/RepsList'
 import { MdArrowBack } from 'react-icons/md'
@@ -14,15 +14,29 @@ export const metadata = {
 }
 
 const Listings = () => {
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
-  const { data, mutate, error, isLoading } = useSWR(
-    `http://localhost:5000/listings`,
-    fetcher
-  );
-
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
+  let search = searchParams.get('q');
+  let request = 'http://localhost:5000/listings';
+
+  if (search) {
+    request = `http://localhost:5000/listings?search=${search}`
+  }
+
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+  const { data, mutate, error, isLoading } = useSWR(request, fetcher);
+
+  const [totalPages, setTotalPages] = useState(0);
+  const itemsPerPage = 9;
+
+  useEffect(() => {
+    if (data) {
+      const totalItems = data.length;
+      const calculatedTotalPages = Math.ceil(totalItems / itemsPerPage);
+      setTotalPages(calculatedTotalPages);
+    }
+  }, [data]);
 
   return (
     <section className={styles.listingsContainer}>
@@ -31,8 +45,8 @@ const Listings = () => {
           <Link href="/"><MdArrowBack fontSize={38} /></Link>
           Lista de Repúblicas
         </h1>
-        {data && <RepsList displayListings={9} data={data} />}
-        <Pagination totalPages={3} currentPage={page} />
+        {data && <RepsList displayListings={9} data={data} page={page} />}
+        {totalPages > 0 && <Pagination totalPages={totalPages} currentPage={page} q={search} />}
       </div>
     </section>
   )

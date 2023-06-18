@@ -5,10 +5,13 @@ import { Input } from '@/components/Input'
 import { SelectOne } from '@/components/SelectOne'
 import { useAuthContext } from '@/context/AuthProvider'
 import { Modal } from '@/components/Modal'
+import { useRouter } from 'next/navigation'
 
 export const AddSection = () => {
   const { auth } = useAuthContext();
   const [modal, setModal] = useState();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const optionsRoom = [
     'Privado',
@@ -51,6 +54,7 @@ export const AddSection = () => {
     const images = files;
 
     try {
+      setLoading(true)
       const createPostResponse = await fetch("http://localhost:5000/listings", {
         method: "POST",
         headers: {
@@ -90,8 +94,11 @@ export const AddSection = () => {
       });
 
       /* e.target.reset(); */
+      setLoading(false);
+      router.refresh();
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -124,7 +131,9 @@ export const AddSection = () => {
           <Input styles={{ marginTop: "20px" }} label="Descrição" type="textarea" required />
           <Input styles={{ marginTop: "20px" }} label="Carregar Fotos (Limite de 6 imagens)" type="file" required multiple files={files} setFiles={setFiles} />
           <div className={styles.submitContainer}>
-            <button className={styles.submitButton} onClick={handleButton}>Adicionar Nova Propriedade</button>
+            <button className={styles.submitButton} onClick={handleButton} disabled={loading} style={{ transition: loading && "9999999s" }}>
+              {!loading ? 'Adicionar Nova Propriedade' : 'Validando...'}
+            </button>
           </div>
         </form>
       </div>

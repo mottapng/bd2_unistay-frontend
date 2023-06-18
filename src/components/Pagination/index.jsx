@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link';
 
-export const Pagination = ({ totalPages, currentPage }) => {
+export const Pagination = ({ totalPages, currentPage, q }) => {
   const pageNumbers = [];
   const visiblePages = 3;
 
@@ -60,7 +60,7 @@ export const Pagination = ({ totalPages, currentPage }) => {
           {currentPage <= 1 ?
             <span>Anterior</span>
             :
-            <Link href={`/listings?page=${previousPage}`}>
+            <Link href={`/listings?page=${previousPage}&q=${q}`}>
               Anterior
             </Link>
           }
@@ -74,7 +74,7 @@ export const Pagination = ({ totalPages, currentPage }) => {
             {number === '...' ? (
               <span className={styles.ellipsis}>...</span>
             ) : (
-              <Link href={`/listings?page=${number}`}>
+              <Link href={`/listings?page=${number}&q=${q}`}>
                 {number}
               </Link>
             )}
@@ -85,7 +85,7 @@ export const Pagination = ({ totalPages, currentPage }) => {
           {nextPage > totalPages ?
             <span>Próximo</span>
             :
-            <Link href={`/listings?page=${nextPage}`}>
+            <Link href={`/listings?page=${nextPage}&q=${q}`}>
               Próximo
             </Link>
           }

@@ -8,7 +8,13 @@ export const RepCard = ({ data }) => {
   return (
     <div className={styles.repCard}>
       <div className={styles.bannerContainer}>
-        <Image src={data.images[0]?.file_url} fill={true} className={styles.banner} alt="Banner República" />
+        <Image
+          src={data.images[0] ? data.images[0].file_url :
+            '/placeholder.jpg'}
+          fill={true}
+          className={styles.banner}
+          alt="Banner República"
+        />
       </div>
       <div className={styles.repContent}>
         <h2>{data.name}</h2>
@@ -19,15 +25,15 @@ export const RepCard = ({ data }) => {
         <div className={styles.repNums}>
           <div>
             <BiBed fontSize={17} />
-            {data.numBedrooms}
+            {data.qnt_bedrooms}
           </div>
           <div>
             <FaBath fontSize={17} />
-            {data.numBedrooms}
+            {data.qnt_bathrooms}
           </div>
           <div>
             <FaCarSide fontSize={17} />
-            {data.numBedrooms}
+            {data.qnt_garage}
           </div>
         </div>
       </div>
