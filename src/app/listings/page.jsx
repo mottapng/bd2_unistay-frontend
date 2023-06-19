@@ -8,11 +8,6 @@ import useSWR from "swr";
 import { useSearchParams } from 'next/navigation';
 import { Pagination } from '@/components/Pagination'
 
-export const metadata = {
-  title: 'Anúncios | UniStay',
-  description: 'Encontre vagas em repúblicas pelo menor custo',
-}
-
 const Listings = () => {
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
