@@ -6,11 +6,45 @@ import { Input } from '@/components/Input'
 export const Register = ({ setModal }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [files, setFiles] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    e.reset();
+    const name = e.target[0].value;
+    const email = e.target[1].value;
+    const cellphone = e.target[2].value;
+    const birth_date = e.target[3].value.split('/').reverse().join('-');
+    const uf = e.target[4].value;
+    const country = e.target[5].value;
+    if (e.target[6].value !== e.target[7].value)
+      return setError("As senhas devem ser iguais!")
+    const password = e.target[6].value;
+
+    setError('')
+
+    try {
+      setLoading(true);
+      const res = await fetch("http://localhost:5000/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          cellphone,
+          birth_date,
+          uf,
+          country,
+          password,
+        }),
+      });
+      setLoading(false);
+      res.status === 201 && setModal('login');
+    } catch (err) {
+      setError(err);
+      console.log(err);
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,7 +68,7 @@ export const Register = ({ setModal }) => {
           </div>
           <div className={styles.fileInput}>
             <Input type="file" styles={{ marginTop: "20px" }} label="Foto de Perfil"
-              multiple={false} required files={files} setFiles={setFiles} />
+              multiple={false} required />
           </div>
         </div>
 
