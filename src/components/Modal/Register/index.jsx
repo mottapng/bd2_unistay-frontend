@@ -6,6 +6,7 @@ import { Input } from '@/components/Input'
 export const Register = ({ setModal }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [files, setFiles] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ export const Register = ({ setModal }) => {
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/users/register", {
+      const res = await fetch("https://unistay-api.onrender.com/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +69,7 @@ export const Register = ({ setModal }) => {
           </div>
           <div className={styles.fileInput}>
             <Input type="file" styles={{ marginTop: "20px" }} label="Foto de Perfil"
-              multiple={false} required />
+              multiple={false} required files={files} setFiles={setFiles} />
           </div>
         </div>
 
