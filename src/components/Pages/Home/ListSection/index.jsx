@@ -9,7 +9,7 @@ export const ListSection = ({ data }) => {
       <div className={styles.listInner}>
         <div className={styles.listHead}>
           <h1>Lista De Repúblicas</h1>
-          <Link href="/listings/?page=1">Ver Tudo</Link>
+          <Link href="/listings/?page=1&q=">Ver Tudo</Link>
         </div>
         <RepsList displayListings={6} data={data} />
       </div>
