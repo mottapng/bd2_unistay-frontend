@@ -1,11 +1,11 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import Image from 'next/image';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { formatCellphone, formatDate, formatMoney } from '@/utils/masks';
 
-export const Input = ({ label, type, placeholder, required, width, defaultValue, multiple, maxLength, minLength, regex, disabled, files, setFiles }) => {
+export const Input = ({ label, type, placeholder, required, width, defaultValue, multiple, maxLength, minLength, regex, reset, disabled, files, setFiles }) => {
   const [dragActive, setDragActive] = useState(false);
   const [value, setValue] = useState(defaultValue);
   const [quantity, setQuantity] = useState(0);
@@ -103,6 +103,13 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
     }
   }
 
+  useEffect(() => {
+    if (reset) {
+      setValue('');
+      setImagesUrl([]);
+    }
+  }, [reset]);
+
   return type === 'text' || type === "email" || type === "password" || type === "number" ? (
     <div className={styles.formInput} style={{ width: width && width }}>
       <label>{label} {required && <span>*</span>}</label>
@@ -142,7 +149,7 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
       (
         <div className={`${styles.formInput} ${styles.textarea}`}>
           <label>{label} {required && <span>*</span>}</label>
-          <textarea required={required} />
+          <textarea required={required} value={value} onChange={handleChange} />
         </div>
       ) : type === "file" ? (
         <div className={styles.fileInput}>

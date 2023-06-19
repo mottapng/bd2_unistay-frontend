@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { Input } from '@/components/Input'
 import { SelectOne } from '@/components/SelectOne'
@@ -29,6 +29,7 @@ export const AddSection = () => {
   const [type, setType] = useState(optionsLocation[0]);
   const [room, setRoom] = useState(optionsRoom[0]);
   const [files, setFiles] = useState([]);
+  const [resetForm, setResetForm] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,9 +94,10 @@ export const AddSection = () => {
         body: imagesFormData,
       });
 
-      /* e.target.reset(); */
       setLoading(false);
       router.refresh();
+      setResetForm(true);
+      setFiles([]);
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -109,6 +111,12 @@ export const AddSection = () => {
     }
   }
 
+  useEffect(() => {
+    if (resetForm) {
+      setResetForm(false);
+    }
+  }, [resetForm]);
+
   return (
     <section className={styles.addContainer}>
       <h2>Use nossa plataforma E tenha garantia de seu aluguel </h2>
@@ -116,20 +124,20 @@ export const AddSection = () => {
         <h2>Adicione uma nova propriedade</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputArea}>
-            <Input label="Nome" type="text" placeholder="Digite o Nome da Propriedade" required />
-            <Input label="Endereço" type="text" placeholder="Digite Endereço" required />
-            <Input label="Número" type="number" placeholder="Digite o Número do Ederenço " required />
-            <Input label="UF" type="text" placeholder="Selecione o Estado" maxLength={2} required />
-            <Input label="Cidade" type="text" placeholder="Selecione a Cidade" required />
+            <Input label="Nome" type="text" placeholder="Digite o Nome da Propriedade" reset={resetForm} required />
+            <Input label="Endereço" type="text" placeholder="Digite Endereço" required reset={resetForm} />
+            <Input label="Número" type="number" placeholder="Digite o Número do Ederenço" reset={resetForm} required />
+            <Input label="UF" type="text" placeholder="Selecione o Estado" maxLength={2} reset={resetForm} required />
+            <Input label="Cidade" type="text" placeholder="Selecione a Cidade" reset={resetForm} required />
             <SelectOne label="Tipo de Imóvel" value={type} setValue={setType} options={optionsLocation} required />
-            <Input label="Quantidade de Quartos" type="count" placeholder="Digite a Quantidade de Quartos" required />
-            <Input label="Quantidade de Banheiros" type="count" placeholder="Digite a Quantidade de Banheiros" required />
-            <Input label="Vagas na Garagem" type="count" placeholder="Digite a Quantidade de Vagas na Garagem" required />
-            <Input label="Preço" type="text" placeholder="Insira o Preço" regex="money" required />
+            <Input label="Quantidade de Quartos" type="count" placeholder="Digite a Quantidade de Quartos" reset={resetForm} required />
+            <Input label="Quantidade de Banheiros" type="count" placeholder="Digite a Quantidade de Banheiros" reset={resetForm} required />
+            <Input label="Vagas na Garagem" type="count" placeholder="Digite a Quantidade de Vagas na Garagem" reset={resetForm} required />
+            <Input label="Preço" type="text" placeholder="Insira o Preço" regex="money" reset={resetForm} required />
             <SelectOne label="Tipo de Quarto" value={room} setValue={setRoom} options={optionsRoom} required />
           </div>
-          <Input styles={{ marginTop: "20px" }} label="Descrição" type="textarea" required />
-          <Input styles={{ marginTop: "20px" }} label="Carregar Fotos (Limite de 6 imagens)" type="file" required multiple files={files} setFiles={setFiles} />
+          <Input styles={{ marginTop: "20px" }} label="Descrição" type="textarea" reset={resetForm} required />
+          <Input styles={{ marginTop: "20px" }} label="Carregar Fotos (Limite de 6 imagens)" type="file" reset={resetForm} required multiple files={files} setFiles={setFiles} />
           <div className={styles.submitContainer}>
             <button className={styles.submitButton} onClick={handleButton} disabled={loading} style={{ transition: loading && "9999999s" }}>
               {!loading ? 'Adicionar Nova Propriedade' : 'Validando...'}
