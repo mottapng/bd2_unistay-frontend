@@ -98,8 +98,8 @@ export const AddSection = () => {
       router.refresh();
       setResetForm(true);
       setFiles([]);
-      setType('Privado');
-      setRoom('República');
+      setType('República');
+      setRoom('Privado');
     } catch (err) {
       console.log(err);
       setLoading(false);
