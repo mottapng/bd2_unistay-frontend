@@ -17,10 +17,10 @@ const Listings = () => {
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
   let search = searchParams.get('q');
-  let request = 'https://unistay-api.onrender.com/listings';
+  let request = 'http://localhost:5000/listings';
 
   if (search) {
-    request = `https://unistay-api.onrender.com/listings?search=${search}`
+    request = `http://localhost:5000/listings?search=${search}`
   }
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());

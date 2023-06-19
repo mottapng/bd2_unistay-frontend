@@ -9,7 +9,7 @@ import { NumInfo } from '@/components/Pages/Listing/NumInfo'
 import { BottomInfo } from '@/components/Pages/Listing/BottomInfo'
 
 async function getData(listing_id) {
-  const res = await fetch(`https://unistay-api.onrender.com/listings/${listing_id}`, {
+  const res = await fetch(`http://localhost:5000/listings/${listing_id}`, {
     cache: "no-store",
   });
 

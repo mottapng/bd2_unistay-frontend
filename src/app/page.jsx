@@ -4,7 +4,7 @@ import { ListSection } from '@/components/Pages/Home/ListSection'
 import styles from './styles.module.scss'
 
 async function getData() {
-  const res = await fetch("https://unistay-api.onrender.com/listings", {
+  const res = await fetch("http://localhost:5000/listings", {
     cache: "no-store",
   });
 

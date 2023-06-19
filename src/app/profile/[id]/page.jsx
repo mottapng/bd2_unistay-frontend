@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 import { reformatDate } from '@/utils/masks'
 
 async function getData(id) {
-  const res = await fetch(`https://unistay-api.onrender.com/users/${id}`, {
+  const res = await fetch(`http://localhost:5000/users/${id}`, {
     cache: "no-store",
   });
 
