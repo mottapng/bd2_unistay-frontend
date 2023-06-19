@@ -55,7 +55,7 @@ export const AddSection = () => {
 
     try {
       setLoading(true)
-      const createPostResponse = await fetch("http://localhost:5000/listings", {
+      const createPostResponse = await fetch("https://unistay-api.onrender.com/listings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +85,7 @@ export const AddSection = () => {
         imagesFormData.append("photos", file);
       }
 
-      await fetch(`http://localhost:5000/listings/${listing_id}/photos`, {
+      await fetch(`https://unistay-api.onrender.com/listings/${listing_id}/photos`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${auth.token}`
