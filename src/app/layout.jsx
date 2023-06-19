@@ -18,6 +18,9 @@ const dm_sans = DM_Sans({
 export const metadata = {
   title: 'UniStay',
   description: 'Encontre vagas em repúblicas pelo menor custo',
+  icons: {
+    icon: '/favicon.png',
+  },
 }
 
 export default function RootLayout({ children }) {
