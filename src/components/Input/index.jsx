@@ -107,6 +107,7 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
     if (reset) {
       setValue('');
       setImagesUrl([]);
+      setQuantity(0);
     }
   }, [reset]);
 

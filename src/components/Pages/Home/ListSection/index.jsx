@@ -11,7 +11,7 @@ export const ListSection = ({ data }) => {
           <h1>Lista De Repúblicas</h1>
           <Link href="/listings/?page=1">Ver Tudo</Link>
         </div>
-        <RepsList displayListings={6} data={data} />
+        <RepsList displayListings={6} data={data} page={1} />
       </div>
     </section>
   )

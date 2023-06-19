@@ -7,6 +7,7 @@ import { SideBar } from '@/components/Pages/Listing/SideBar'
 import { ImagesSlider } from '@/components/Pages/Listing/ImagesSlider'
 import { NumInfo } from '@/components/Pages/Listing/NumInfo'
 import { BottomInfo } from '@/components/Pages/Listing/BottomInfo'
+import { notFound } from 'next/navigation'
 
 async function getData(listing_id) {
   const res = await fetch(`https://unistay-api.onrender.com/listings/${listing_id}`, {
