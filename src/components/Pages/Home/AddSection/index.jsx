@@ -14,16 +14,16 @@ export const AddSection = () => {
   const router = useRouter();
 
   const optionsRoom = [
-    'Privado',
-    'Compartilhado'
+    { label: 'Privado', value: 'Privado' },
+    { label: 'Compartilhado', value: 'Compartilhado' }
   ];
 
   const optionsLocation = [
-    'República',
-    'Apartamento',
-    'Quarto',
-    'Casa',
-    'Kitnet'
+    { label: 'República', value: 'República' },
+    { label: 'Apartamento', value: 'Apartamento' },
+    { label: 'Quarto', value: "Quarto" },
+    { label: 'Casa', value: "Casa" },
+    { label: 'Kitnet', value: 'Kitnet' }
   ];
 
   const [type, setType] = useState(optionsLocation[0]);
@@ -34,11 +34,11 @@ export const AddSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const type_id = type === "República" ? 1 :
-      type === "Apartamento" ? 2 :
-        type === "Quarto" ? 3 :
-          type === "Casa" ? 4 :
-            type === "Kitnet" ? 5 :
+    const type_id = type.value === "República" ? 1 :
+      type.value === "Apartamento" ? 2 :
+        type.value === "Quarto" ? 3 :
+          type.value === "Casa" ? 4 :
+            type.value === "Kitnet" ? 5 :
               undefined
 
     const name = e.target[0].value;
@@ -50,13 +50,13 @@ export const AddSection = () => {
     const qnt_bathrooms = Number(e.target[9].value);
     const qnt_garage = Number(e.target[12].value);
     const price = Number(e.target[14].value.replace(/\D/g, '') / 100);
-    const private_room = room === "Privado" ? true : false;
+    const private_room = room.value === "Privado" ? true : false;
     const description = e.target[15].value;
     const images = files;
 
     try {
       setLoading(true)
-      const createPostResponse = await fetch("https://unistay-api.onrender.com/listings", {
+      const createPostResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/listings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export const AddSection = () => {
         imagesFormData.append("photos", file);
       }
 
-      await fetch(`https://unistay-api.onrender.com/listings/${listing_id}/photos`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/listings/${listing_id}/photos`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${auth.token}`

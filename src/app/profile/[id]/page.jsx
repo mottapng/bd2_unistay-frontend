@@ -9,29 +9,40 @@ import { notFound } from "next/navigation";
 import { reformatDate } from '@/utils/masks'
 
 async function getData(id) {
-  const res = await fetch(`https://unistay-api.onrender.com/users/${id}`, {
-    cache: "no-store",
-  });
+  try {
+    const [userInfoResponse, userListingsResponse] = await Promise.all([
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
+        cache: "no-store",
+      }),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/listings/user/${id}`, {
+        cache: "no-store",
+      }),
+    ]);
 
-  if (!res.ok) {
-    return notFound()
+    if (!userInfoResponse.ok && !userListingsResponse.ok) {
+      return notFound();
+    }
+
+    const userInfoData = await userInfoResponse.json();
+    const userListingsData = await userListingsResponse.json();
+
+    return { userInfoData, userListingsData };
+  } catch (error) {
+    console.error("Error fetching data:", error);
   }
-
-  return res.json();
 }
 
 
 export async function generateMetadata({ params }) {
-
-  const user = await getData(params.id)
+  const { userInfoData } = await getData(params.id)
 
   return {
-    title: `${user.name} | UniStay`
+    title: `${userInfoData.name} | UniStay`
   };
 }
 
 const UserProfile = async ({ params }) => {
-  const data = await getData(params.id);
+  const { userInfoData, userListingsData } = await getData(params.id);
 
   return (
     <section className={styles.profileContainer}>
@@ -46,7 +57,7 @@ const UserProfile = async ({ params }) => {
           <div className={styles.profileInfo}>
             <Input
               label="Nome do Usuário"
-              defaultValue={data.name}
+              defaultValue={userInfoData.name}
               type="text"
               placeholder="Nome do Usuário"
               required
@@ -55,14 +66,14 @@ const UserProfile = async ({ params }) => {
             <Input
               label="E-mail"
               type="email"
-              defaultValue={data.email}
+              defaultValue={userInfoData.email}
               placeholder="email@dominio.com"
               required
               disabled
             />
             <Input
               label="Número do telefone"
-              defaultValue={data.cellphone}
+              defaultValue={userInfoData.cellphone}
               type="text"
               placeholder="(12) 34567-8910"
               required
@@ -70,7 +81,7 @@ const UserProfile = async ({ params }) => {
             />
             <Input
               label="Data de nascimento"
-              defaultValue={reformatDate(data.birth_date)}
+              defaultValue={reformatDate(userInfoData.birth_date)}
               type="text"
               placeholder="00/00/0000"
               required
@@ -79,7 +90,7 @@ const UserProfile = async ({ params }) => {
             <Input
               label="Cidade"
               type="text"
-              defaultValue={data.country}
+              defaultValue={userInfoData.country}
               placeholder="Cidade do Usuário"
               required
               disabled
@@ -87,14 +98,14 @@ const UserProfile = async ({ params }) => {
             <Input
               label="Estado"
               type="text"
-              defaultValue={data.uf}
+              defaultValue={userInfoData.uf}
               placeholder="UF"
               required
               disabled
             />
           </div>
         </div>
-        <UserListings />
+        <UserListings listings={userListingsData} />
       </div>
     </section>
   )

@@ -5,7 +5,23 @@ import Image from 'next/image';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { formatCellphone, formatDate, formatMoney } from '@/utils/masks';
 
-export const Input = ({ label, type, placeholder, required, width, defaultValue, multiple, maxLength, minLength, regex, reset, disabled, files, setFiles }) => {
+export const Input = ({
+  label,
+  type,
+  placeholder,
+  required,
+  width,
+  defaultValue,
+  multiple,
+  maxLength,
+  minLength,
+  regex,
+  reset,
+  disabled,
+  files,
+  setFiles,
+  style
+}) => {
   const [dragActive, setDragActive] = useState(false);
   const [value, setValue] = useState(defaultValue);
   const [quantity, setQuantity] = useState(0);
@@ -124,6 +140,7 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
         maxLength={maxLength}
         minLength={minLength}
         disabled={disabled}
+        style={style}
       />
     </div>
   ) : type === 'count' ?
@@ -194,7 +211,15 @@ export const Input = ({ label, type, placeholder, required, width, defaultValue,
                   </div>
                 </div>
               ))}
-            {dragActive && <div className={styles.dragElement} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div>}
+            {dragActive &&
+              <div
+                className={styles.dragElement}
+                onDragEnter={handleDrag}
+                onDragLeave={handleDrag}
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+              />
+            }
           </label>
         </div>
       ) : undefined

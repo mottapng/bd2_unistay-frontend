@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import styles from './styles.module.scss'
 import { GrFormClose } from 'react-icons/gr'
 import { Input } from '@/components/Input'
@@ -16,7 +16,7 @@ export const Login = ({ setModal }) => {
 
     try {
       setLoading(true);
-      const res = await fetch("https://unistay-api.onrender.com/users/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,20 +27,25 @@ export const Login = ({ setModal }) => {
         }),
       });
 
-      const data = await res.json()
+      if (res.status === 400) {
+        setError('email');
+      } else if (res.status === 401) {
+        setError('senha');
+      } else {
+        const data = await res.json()
 
+        const user = data?.user.user_id;
+        const name = data?.user.name;
+        const token = data?.token;
 
-      setLoading(false);
-
-      const user = data?.user.user_id;
-      const name = data?.user.name;
-      const token = data?.token;
-
-      res.status === 201 && setAuth({ user, name, email, token });
-      setModal(null)
+        res.status === 201 && setAuth({ user, name, email, token });
+        setModal(null)
+      }
     } catch (err) {
       setError(err);
       console.log(err);
+
+    } finally {
       setLoading(false);
     }
   };
@@ -49,9 +54,23 @@ export const Login = ({ setModal }) => {
     <div className={styles.loginContainer}>
       <GrFormClose className={styles.closeIcon} onClick={() => setModal(null)} />
       <h1>Bem-vindo ao <br /> UniStay</h1>
-      <form onSubmit={handleSubmit}>
-        <Input label="E-mail" type="email" placeholder="Digite Seu E-mail" required width={326} />
-        <Input label="Senha" type="password" placeholder="Digite Sua Senha" required width={326} />
+      <form onSubmit={handleSubmit} onChange={() => setError("")}>
+        <Input
+          label="E-mail"
+          type="email"
+          placeholder="Digite Seu E-mail"
+          required
+          width={326}
+          style={error === "email" ? { border: "1px solid #ff3632", color: "#ff3632" } : {}}
+        />
+        <Input
+          label="Senha"
+          type="password"
+          placeholder="Digite Sua Senha"
+          required
+          width={326}
+          style={error === "senha" || error === "email" ? { border: "1px solid #ff3632", color: "#ff3632" } : {}}
+        />
 
         <button disabled={loading} style={{ transition: loading && "9999999s" }}>
           {loading ? "Entrando..." : "Entrar"}

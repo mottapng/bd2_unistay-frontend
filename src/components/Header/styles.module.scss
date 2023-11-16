@@ -39,6 +39,8 @@
 
   position: relative;
 
+  margin-right: 12px;
+
   .userInfo {
     padding-left: 15px;
     border-left: 2px solid #ffffffd8;
@@ -93,7 +95,7 @@
     transition: opacity 0.3s ease;
 
     &:after {
-      content: '';
+      content: "";
 
       position: absolute;
       top: -5px;
@@ -119,7 +121,7 @@
 
       &:last-of-type {
         &:after {
-          content: '';
+          content: "";
 
           width: 60%;
           height: 1px;

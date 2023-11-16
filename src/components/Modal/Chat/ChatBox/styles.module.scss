@@ -7,8 +7,10 @@
   background-color: #f5f5f5;
   border-radius: 30px;
 
+  border: 1px solid #e6e6e6;
+
   .messagesContainer {
-    padding: 42px 32px;
+    padding: 34px 32px 26px;
     height: 380px;
     display: flex;
     flex-direction: column-reverse;
@@ -43,20 +45,31 @@
     align-self: flex-end;
 
     p {
+      align-self: flex-end;
       background-color: #fff;
     }
 
     span {
       margin-left: auto;
+
+      font-weight: 400;
+      font-size: 12px;
     }
   }
 
   .sentMessage {
+    align-self: flex-start;
     text-align: left;
 
     p {
+      align-self: flex-start;
       color: #fff;
       background-color: var(--purple-primary);
+    }
+
+    span {
+      font-weight: 400;
+      font-size: 12px;
     }
   }
 
@@ -64,19 +77,18 @@
     display: flex;
     align-items: center;
     background: #ffffff;
-    border: 2px solid rgba(0, 0, 0, 0.3);
+    border: 1px solid #e6e6e6;
     border-radius: 20px;
 
-    padding: 12px 24px;
-    margin: 10px 52px;
+    padding: 10px 16px;
+    margin: 10px 32px;
 
     input {
       width: 100%;
       font-weight: 400;
-      font-size: 18px;
-      line-height: 31px;
+      font-size: 17px;
+      line-height: 26px;
       letter-spacing: -0.642075px;
-      text-transform: capitalize;
 
       margin-right: 10px;
 

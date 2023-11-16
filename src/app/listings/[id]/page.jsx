@@ -10,7 +10,7 @@ import { BottomInfo } from '@/components/Pages/Listing/BottomInfo'
 import { notFound } from 'next/navigation'
 
 async function getData(listing_id) {
-  const res = await fetch(`https://unistay-api.onrender.com/listings/${listing_id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/listings/${listing_id}`, {
     cache: "no-store",
   });
 
@@ -40,7 +40,7 @@ const Listing = async ({ params }) => {
         <div className={styles.listingInnerLeft}>
           <h1>
             <Link href="/listings?page=1"><MdArrowBack fontSize={38} /></Link>
-            Lista de Repúblicas
+            Lista de Anúncios
           </h1>
           <UserInfo data={data} />
           <ImagesSlider images={data.images} />

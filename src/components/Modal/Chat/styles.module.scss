@@ -1,6 +1,6 @@
 .chatContainer {
   position: relative;
-  margin: 43px 50px;
+  padding: 43px 50px;
 
   h1 {
     font-weight: bold;
@@ -19,9 +19,93 @@
     font-size: 24px;
 
     position: absolute;
-    top: -24px;
-    right: -24px;
+    top: 24px;
+    right: 24px;
 
     cursor: pointer;
+  }
+
+  h2 {
+    min-width: 300px;
+
+    font-weight: bold;
+    font-size: 26px;
+
+    text-align: center;
+    letter-spacing: 0.1px;
+
+    color: var(--gray-900);
+
+    margin-bottom: 34px;
+  }
+
+  a {
+    background: var(--purple-primary);
+    border-radius: 5px;
+
+    padding: 16px 65px;
+
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 23px;
+
+    color: #ffffff;
+    cursor: pointer;
+    transition: 0.2s ease-out;
+
+    display: flex;
+    align-items: center;
+
+    white-space: nowrap;
+
+    &:hover {
+      transform: scale(0.98);
+    }
+  }
+}
+
+.loadingContainer {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.svg {
+  width: 3.25em;
+  transform-origin: center;
+  animation: rotate4 2s linear infinite;
+}
+
+.svg circle {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 4;
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  animation: dash4 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate4 {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash4 {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -35px;
+  }
+
+  100% {
+    stroke-dashoffset: -125px;
   }
 }

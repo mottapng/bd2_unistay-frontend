@@ -9,7 +9,7 @@ export const RepCard = ({ data }) => {
     <div className={styles.repCard}>
       <div className={styles.bannerContainer}>
         <Image
-          src={data?.images ? data.images[0].file_url :
+          src={data?.images.length > 0 ? data.images[0]?.file_url :
             '/placeholder.jpg'}
           fill={true}
           className={styles.banner}

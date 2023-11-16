@@ -12,10 +12,10 @@ const Listings = () => {
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
   let search = searchParams.get('q');
-  let request = 'https://unistay-api.onrender.com/listings';
+  let request = `${process.env.NEXT_PUBLIC_API_URL}/listings`;
 
   if (search) {
-    request = `https://unistay-api.onrender.com/listings?search=${search}`
+    request = `${process.env.NEXT_PUBLIC_API_URL}/listings?search=${search}`
   }
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -38,7 +38,7 @@ const Listings = () => {
       <div className={styles.listingsInner}>
         <h1>
           <Link href="/"><MdArrowBack fontSize={38} /></Link>
-          Lista de Repúblicas
+          Lista de Anúncios
         </h1>
         {data && <RepsList displayListings={9} data={data} page={page} />}
         {totalPages > 0 && <Pagination totalPages={totalPages} currentPage={page} q={search} />}

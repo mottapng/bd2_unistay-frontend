@@ -3,6 +3,7 @@ import { Inter, DM_Sans } from 'next/font/google'
 import { Footer } from '@/components/Footer'
 import './globals.scss'
 import { AuthContextProvider } from '@/context/AuthProvider'
+import { SocketProvider } from '@/context/SocketProvider'
 
 const inter = Inter({
   variable: '--font-Inter',
@@ -28,9 +29,11 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${dm_sans.variable} ${inter.variable}`}>
       <body>
         <AuthContextProvider>
-          <Header />
-          {children}
-          <Footer />
+          <SocketProvider>
+            <Header />
+            {children}
+            <Footer />
+          </SocketProvider>
         </AuthContextProvider>
       </body>
     </html>

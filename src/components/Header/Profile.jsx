@@ -17,13 +17,12 @@ export const Profile = ({ setModal }) => {
     <div className={styles.avatarContainer}>
       {auth.user ? (
         <>
-          <FaRegBell color='#fff' fontSize='24px' cursor='pointer' />
           <HiOutlineChatAlt2 onClick={() => setModal('chat')} color='#fff' fontSize='28px' cursor='pointer' />
           <div className={styles.userInfo}>
             <p>{auth.name}</p>
             <span>{auth.email}</span>
           </div>
-          <a onClick={() => setIsPopupOpen(prev => !prev)} >
+          <a onClick={() => setIsPopupOpen(prev => !prev)}>
             <div className={styles.userAvatar}>
               {getInitials(auth.name)}
             </div>

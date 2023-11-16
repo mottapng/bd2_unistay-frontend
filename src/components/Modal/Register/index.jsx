@@ -24,7 +24,7 @@ export const Register = ({ setModal }) => {
 
     try {
       setLoading(true);
-      const res = await fetch("https://unistay-api.onrender.com/users/register", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

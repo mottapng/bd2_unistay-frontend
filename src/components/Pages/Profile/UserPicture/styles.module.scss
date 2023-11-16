@@ -6,6 +6,21 @@
     border-radius: 50%;
   }
 
+  .avatarContainer {
+    width: 220px;
+    height: 220px;
+    border-radius: 100%;
+
+    background-color: var(--purple-primary);
+    color: #fff;
+    font-size: 82px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .iconContainer {
     position: absolute;
 
